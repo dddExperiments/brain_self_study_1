@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroAgent: SOTA Neuroscience & Reservoir Computing for AI</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app" class="dashboard-grid">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">🧠</div>
+          <div class="brand-text">
+            <h1>NEUROAGENT</h1>
+            <span>Computational Neuroscience & AI</span>
+          </div>
+        </div>
+
+        <div class="progress-widget">
+          <div class="progress-header">
+            <span>Overall Progress</span>
+            <span id="progress-percent">0%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <nav class="nav-menu" id="chapters-nav">
+          <!-- Dynamically populated -->
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="footer-info">
+            <p>Version: SOTA 2026</p>
+            <p>For Smart Agent Engineering</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Reader Pane -->
+      <main class="reader-pane" id="reader-pane">
+        <div class="reader-toolbar">
+          <button id="toggle-theme-btn" class="toolbar-btn" title="Toggle Light/Dark Theme">
+            <span class="theme-icon">☀️</span>
+            <span class="theme-text">Light Mode</span>
+          </button>
+          <button id="toggle-visualizer-btn" class="toolbar-btn" title="Toggle 3D Brain Visualizer">
+            <span class="toggle-vis-icon">👁️</span>
+            <span class="toggle-vis-text">Hide 3D Brain</span>
+          </button>
+        </div>
+        <div class="chapter-content-container" id="chapter-container">
+          <!-- Active chapter content will be injected here -->
+        </div>
+
+        <!-- Quiz Trigger Section (always at the bottom of the chapter) -->
+        <div class="quiz-trigger-section hidden" id="quiz-trigger-section">
+          <div class="quiz-card">
+            <div class="quiz-card-badge">ACTIVE RECALL</div>
+            <h2>Chapter Knowledge Check</h2>
+            <p>Answer the following questions to consolidate your understanding of the circuits, connections, and mathematical concepts explained in this chapter.</p>
+            <button class="btn btn-primary" id="start-quiz-btn">Start Chapter Quiz</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- 3D Visualizer Pane -->
+      <section class="visualizer-pane">
+        <div class="canvas-container" id="canvas-container">
+          <!-- Three.js Canvas will be appended here -->
+        </div>
+
+        <!-- Visualizer HUD / Overlay -->
+        <div class="hud-overlay">
+          <div class="hud-panel hud-header">
+            <div class="hud-title">CORTICAL CIRCUIT SCHEMATIC</div>
+            <div class="hud-status" id="hud-active-region">Active Region: None</div>
+          </div>
+
+          <div class="hud-panel hud-details" id="hud-region-details">
+            Select a chapter or hover over brain nodes to inspect anatomical pathways.
+          </div>
+
+          <div class="hud-panel hud-controls">
+            <span>Left Click + Drag: Rotate</span>
+            <span>Right Click + Drag: Pan</span>
+            <span>Scroll: Zoom</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Full-screen Quiz Overlay -->
+      <div class="quiz-overlay hidden" id="quiz-overlay">
+        <div class="quiz-modal">
+          <div class="quiz-modal-header">
+            <h3 id="quiz-title">Chapter Quiz</h3>
+            <button class="btn-close" id="close-quiz-btn">&times;</button>
+          </div>
+          
+          <div class="quiz-progress">
+            <div class="quiz-progress-bar-container">
+              <div class="quiz-progress-bar-fill" id="quiz-progress-fill" style="width: 0%;"></div>
+            </div>
+            <span id="quiz-question-number">Question 1 of 5</span>
+          </div>
+
+          <div class="quiz-modal-body">
+            <div class="quiz-question-card">
+              <p class="quiz-question-text" id="quiz-question-text">Question text goes here?</p>
+              <div class="quiz-options-container" id="quiz-options-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+            <div class="quiz-feedback hidden" id="quiz-feedback">
+              <div class="feedback-status" id="feedback-status">Correct!</div>
+              <p class="feedback-explanation" id="feedback-explanation">Explanation...</p>
+              <button class="btn btn-primary" id="next-question-btn">Next Question</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Glossary Tooltip -->
+    <div id="glossary-tooltip" class="glossary-tooltip">
+      <div class="tooltip-header">
+        <h4 id="tooltip-term-title">Term Title</h4>
+      </div>
+      <div class="tooltip-body">
+        <p id="tooltip-definition">Simplified definition goes here...</p>
+        <a id="tooltip-wiki-link" href="#" target="_blank" class="tooltip-wiki-btn">Read Wikipedia Article ↗</a>
+      </div>
+      <div class="tooltip-arrow"></div>
+    </div>
+
+    <!-- Main JS entrypoint -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
