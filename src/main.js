@@ -70,8 +70,29 @@ function initApp() {
   // Load saved state from LocalStorage if available
   loadState();
 
-  // Instantiate Three.js Scene
-  visualizer = new BrainVisualizer('canvas-container');
+  // Instantiate Three.js Scene if not on mobile
+  const isMobile = window.innerWidth <= 768;
+  if (!isMobile) {
+    try {
+      visualizer = new BrainVisualizer('canvas-container');
+    } catch (err) {
+      console.error("Three.js visualizer failed to load. Falling back to text-only mode.", err);
+      const visPane = document.querySelector('.visualizer-pane');
+      const dashboardGrid = document.querySelector('.dashboard-grid');
+      if (visPane) visPane.style.display = 'none';
+      if (dashboardGrid) {
+        dashboardGrid.style.gridTemplateColumns = '1fr';
+      }
+    }
+  } else {
+    // Mobile fallback: adjust layouts immediately
+    const visPane = document.querySelector('.visualizer-pane');
+    const dashboardGrid = document.querySelector('.dashboard-grid');
+    if (visPane) visPane.style.display = 'none';
+    if (dashboardGrid) {
+      dashboardGrid.style.gridTemplateColumns = '1fr';
+    }
+  }
 
   // Render Navigation
   renderNavigation();
@@ -146,6 +167,28 @@ function initApp() {
     });
   }
 
+  // Mobile Nav toggle functionality
+  const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+  if (mobileNavToggle && chaptersNav) {
+    mobileNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = chaptersNav.classList.toggle('open');
+      const arrow = mobileNavToggle.querySelector('.mobile-nav-toggle-arrow');
+      if (arrow) {
+        arrow.textContent = isOpen ? '▲' : '▼';
+      }
+    });
+
+    // Close menu when clicking anywhere else on the document
+    document.addEventListener('click', () => {
+      chaptersNav.classList.remove('open');
+      const arrow = mobileNavToggle.querySelector('.mobile-nav-toggle-arrow');
+      if (arrow) {
+        arrow.textContent = '▼';
+      }
+    });
+  }
+
   // Initial HUD update
   updateHUD('none');
   updateProgressBar();
@@ -214,11 +257,27 @@ function renderNavigation() {
         saveState();
         renderNavigation();
         loadChapter(index);
+
+        // Close mobile nav menu
+        chaptersNav.classList.remove('open');
+        const arrow = document.querySelector('.mobile-nav-toggle-arrow');
+        if (arrow) arrow.textContent = '▼';
       });
     }
 
     chaptersNav.appendChild(navItem);
   });
+
+  // Update mobile toggle text to active chapter
+  const mobileToggleText = document.getElementById('mobile-nav-toggle-text');
+  if (mobileToggleText) {
+    const activeCh = chapters[state.currentChapterIndex];
+    if (activeCh.id === 'resources') {
+      mobileToggleText.textContent = `🎥 ${activeCh.title}`;
+    } else {
+      mobileToggleText.textContent = `📖 Ch ${state.currentChapterIndex + 1}: ${activeCh.title}`;
+    }
+  }
 }
 
 // Load and render chapter content
